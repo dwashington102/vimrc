@@ -29,9 +29,12 @@ Plugin 'KabbAmine/yowish.vim'
 " " by name as it appears on the site
 Plugin 'Buffergator'
 Plugin 'jellybeans.vim'
+" Plugin 'codeschool.vim'
 Plugin 'SuperTab'
 Plugin 'taglist.vim'
 Plugin 'delimitMate.vim'
+Plugin 'dracula/vim'
+Plugin 'arcticicestudio/nord-vim'
 
 " " Color Plugins
 Plugin 'w0ng/vim-hybrid'
@@ -40,20 +43,23 @@ Plugin 'w0ng/vim-hybrid'
 Plugin 'vim-syntastic/syntastic'
 Plugin 'vim-scripts/indentpython.vim'
 Plugin 'vim-perl/vim-perl'
+Plugin 'mileszs/ack.vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 "
 
 " ==================== End of Plugins===========
 " }}}
 
 filetype plugin indent on
-" #set mouse=a
+" set mouse=a
 set modelines=1
 syntax on
 set laststatus=2
 set cursorline
 let g:Powerline_symbols = "fancy" 
 autocmd InsertEnter * highlight CursorLine guibg=darkred guifg=fg
-"autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
+" autocmd InsertLeave * highlight CursorLine guibg=#004000 guifg=fg
 autocmd InsertLeave * highlight CursorLine guibg=#808080 guifg=fg
 
 set foldmethod=syntax
@@ -75,10 +81,13 @@ let mapleader="-"
 " ==================== Set Mappings==========
 nmap nton :NERDTree<cr>
 nnoremap <C-n> :NERDTreeToggle<cr>
-nnoremap <C-t> :Tlist<cr>
+nnoremap <C-l> :Tlist<cr>
 " =====Fold Section =============
 nmap <Space> za
 " =====Fold Section =============
+nnoremap <C-p> :Files<Cr>
+let g:fzf_layout = { 'down': '40%' }
+
 nmap was :set syntax=log<cr>
 nmap httplog :set syntax=httplog<cr>
 nmap r1 :set syntax=raslog<cr>
@@ -92,6 +101,8 @@ nmap <Leader>vterm :ConqueTermVSplit bash<cr>
 inoremap fj <Esc>l
 inoremap jf <Esc>l
 :command! -complete=file -nargs=1 Rpdf :r !pdftotext -nopgbrk <q-args> -
+
+" Mapping to add the current date/time
 nmap <F5> :pu=strftime('%c')<cr>
 " ==================== End Mapping===========
 " }}}
@@ -100,11 +111,15 @@ nmap <F5> :pu=strftime('%c')<cr>
 " Plugin Settings {{{ 
 " Plugin - Airline
 """"""""""""""""""""""
-let g:airline#extensions#tabline#enabled = 0
+" let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#whitespace#enabled = 0
-let g:airline_theme ='cobalt2'
+let g:airline_theme ='term'
+
+" Add tab for open buffers
+let g:airline#extensions#tabline#enabled = 1
 " DO NOT REMOVE COMMENT FROM g:airline_powerline_fonts...yet
-" let g:airline_powerline_fonts = 1
+" In order to add the powerline >> install powerline-shell via pip
+let g:airline_powerline_fonts = 1
 
 " Plugin - SuperTab 
 """"""""""""""""""""""
@@ -137,25 +152,32 @@ let Tlist_Use_Right_Window=0
 " }}}
 set t_Co=256
 " ==================== Colors Schemes===========
-"colorscheme codeschool
-" colorscheme distinguished
+set background=dark
 " colorscheme badwolf
-"" colorscheme darkblue
+" colorscheme codeschool
+" colorscheme darkblue
+colorscheme medic_chalk
+" colorscheme distinguished
+" colorscheme dracula
 " colorscheme elflord
-colorscheme jellybeans
+" colorscheme jellybeans
+" colorscheme nord
 " colorscheme railscasts
 " colorscheme twilight
 " colorscheme vividchalk
 " colorscheme yowish
-"
 
 " ==================== Colors Override CursorLine Value===========
-hi CursorLine ctermfg=White ctermbg=24 cterm=bold guifg=white guibg=yellow gui=bold
+"hi CursorLine ctermfg=White ctermbg=24 cterm=bold guifg=white guibg=yellow gui=bold
+hi CursorLine ctermfg=White ctermbg=24 cterm=bold guifg=white guibg=DarkSlateGray gui=bold
 " ==================== End of Colors===========
 "
 "
 " =========== Auto filedetect - Load Syntax==========
-au BufRead,BufNewFile SystemOut* set syntax=log
+au BufRead,BufNewFile SystemOut*.log set syntax=log
+au BufRead,BufNewFile trace*.log set syntax=log
+au BufRead,BufNewFile BPMConfig_*.log set syntax=log
+au BufRead,BufNewFile DBUpgrade_*.log set syntax=log
 au BufRead,BufNewFile messages.log set syntax=log
 au BufRead,BufNewFile cogserver.log set syntax=cognos
 au BufRead,BufNewFile *_cq_KfwServices_* set syntax=raslog
@@ -170,5 +192,6 @@ au BufRead,BufNewFile *_nt_kntcma_5*.log      set syntax=raslog
 au BufRead,BufNewFile db2diag.log set syntax=db2diaglog
 au BufRead,BufNewFile cogserver.log set syntax=cognos
 au BufRead,BufNewFile *.sql set syntax=sql
-au BufRead,BufNewFile *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
+" au BufRead,BufNewFile *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=90 expandtab autoindent fileformat=unix
+au BufRead,BufNewFile *.py set tabstop=4 softtabstop=4 shiftwidth=4 expandtab autoindent fileformat=unix
 " ===========  End Auto filedetect - Load Syntax==========
